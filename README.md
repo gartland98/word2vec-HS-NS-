@@ -1,4 +1,7 @@
 # word2vec-HS-NS-
+Dataset
+text8 corpus
+
 How to run
 
 python word2vec.py [mode] [negative_samples] [partition]
