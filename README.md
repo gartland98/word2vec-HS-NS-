@@ -25,3 +25,5 @@ https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phras
 In above paper, there are many techniques for boosting performance such as learning rate scheduling, hyper-parameter settings, ....
 
 You can use any of them.
+
+question-word.txt is the answer dataset of analogy task. 
