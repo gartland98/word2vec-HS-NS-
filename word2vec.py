@@ -394,8 +394,10 @@ def main():
     print('build training set2...')
     if mode=="CBOW":
         for j in range(len(words)):
+	    ################# subsampling ########################
             #choice=random.choice(subsample_class[w2i[words[j]]])
             #if choice==1:
+	    #######################################################
                 if j<window_size:
                     input_set.append([0 for _ in range(window_size-j)] + [w2i[words[k]] for k in range(j)] + [w2i[words[j+k+1]] for k in range(window_size)])
                     target_set.append(w2i[words[j]])
