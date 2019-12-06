@@ -53,7 +53,7 @@ def subsampling(word_seq):
 
 
 def skipgram_HS(centerWord, contextCode, inputMatrix, outputMatrix):
-################################  Input  ########################################## HS loss 식을 잘못 구해서 이를 수정함
+################################  Input  ########################################## 
 # centerWord : Index of a centerword (type:int)                                   #
 # contextCode : Code of a contextword (type:str)                                  #
 # inputMatrix : Weight matrix of input (type:torch.tesnor(V,D))                   #
@@ -118,6 +118,18 @@ def skipgram_NS(centerWord, inputMatrix, outputMatrix):
     for prob in dsoftmax:
         prob[-1]-=1
 
+####################################################################################
+    #loss=0 
+    #codelist=torch.Tensor([0 for _ in range(19)] + [1 for _ in range(1)])
+    #loss_list=torch.stack([x-y for x,y in zip (softmax, codelist)]) #start of backpropagation
+
+    #for i in loss_list:
+        #for j in i:
+            #if j<0:
+                #loss-=torch.log(j+1)
+            #else:
+                #loss-=torch.log(1-j)
+#####################################################################################
 
 
     grad_out = torch.mm(dsoftmax.t(), hidden_layer)
@@ -193,6 +205,19 @@ def CBOW_NS(contextWords, inputMatrix, outputMatrix):
     dsoftmax=softmax.clone()
     for prob in dsoftmax:
         prob[-1]-=1
+	
+####################################################################################
+    #loss=0 
+    #codelist=torch.Tensor([0 for _ in range(19)] + [1 for _ in range(1)])
+    #loss_list=torch.stack([x-y for x,y in zip (softmax, codelist)]) #start of backpropagation
+
+    #for i in loss_list:
+        #for j in i:
+            #if j<0:
+                #loss-=torch.log(j+1)
+            #else:
+                #loss-=torch.log(1-j)
+#####################################################################################
 
     grad_out = torch.mm(dsoftmax.t(), hidden_layer)
     grad_in = torch.mm(dsoftmax, outputMatrix)
@@ -355,13 +380,17 @@ def main():
     target_set=[]
     window_size = 5
 
+########################################################## subsampling code ##########################################################
+# I just change this part of code as comment because it takes a long time. But according to the paper subsampling improve accuracy of analogy task
+# Therefore if you want high accuracy I recommend you to use this part of code as well
+# subsampling function is in the upper part of this function
     #subsample_class = []
     #for j in range(len(freqdict)):
         #subsample_classify = [1 for _ in range(int(subsampling(freqdict)[j] * 1000))] + [0 for _ in range(1000 - int(subsampling(freqdict)[j] * 1000))]
         #subsample_class.append(subsample_classify)
         #if len(subsample_class) % 50 == 0:
             #print(len(subsample_class))
-
+########################################################################################################################################
     print('build training set2...')
     if mode=="CBOW":
         for j in range(len(words)):
