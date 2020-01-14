@@ -6,7 +6,7 @@ import random
 from huffman import HuffmanCoding
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+
 
 def Analogical_Reasoning_Task(embedding, word2ind, ind2word,vocab):
     #######################  Input  #########################
