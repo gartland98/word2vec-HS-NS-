@@ -46,8 +46,8 @@ def subsampling(word_seq):
     coeff= 0.001
     subsample_list = []
     for i in range(len(word_seq.keys())):
-        word_fraction = torch.Tensor([word_seq[i] / sum(word_seq.values())])
-        subsample = (torch.sqrt(word_fraction/ coeff) + 1) * (coeff / word_fraction)
+        word_fraction = torch.tensor([word_seq[i] / sum(word_seq.values())])
+        subsample=(1-torch.sqrt(torch.tensor(coeff/word_fraction)))
         subsample_list.append(subsample)
     return subsample_list
 
