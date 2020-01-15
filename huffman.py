@@ -9,8 +9,8 @@ class HeapNode:
 		self.right = None
 		self.index= None
 
-	def __lt__(self, other):    #less than, use min-heap
-		if(other == None):
+	def __lt__(self, other):    # built-in method, because we want to sort by value of freqdict which is located in second position of tuple
+		if(other == None):  # (key=char, value=freq), I use this method because heapq heappush sort elements (tuples) of list by first position value 
 			return -1
 		if(not isinstance(other, HeapNode)):
 			return -1
