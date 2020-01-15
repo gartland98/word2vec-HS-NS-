@@ -122,7 +122,7 @@ def skipgram_NS(centerWord, inputMatrix, outputMatrix):
     for prob in dsoftmax:
         prob[-1]-=1
 
-####################################################################################
+##################code written in what original paper said#############################
     #loss=0 
     #codelist=torch.Tensor([0 for _ in range(19)] + [1 for _ in range(1)])
     #loss_list=torch.stack([x-y for x,y in zip (softmax, codelist)]) #start of backpropagation
@@ -210,7 +210,7 @@ def CBOW_NS(contextWords, inputMatrix, outputMatrix):
     for prob in dsoftmax:
         prob[-1]-=1
 	
-####################################################################################
+#######################code written in what original paper said#######################
     #loss=0 
     #codelist=torch.Tensor([0 for _ in range(19)] + [1 for _ in range(1)])
     #loss_list=torch.stack([x-y for x,y in zip (softmax, codelist)]) #start of backpropagation
