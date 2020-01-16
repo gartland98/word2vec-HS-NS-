@@ -427,7 +427,7 @@ def main():
     print()
 
     #Training section
-    emb,_ = word2vec_trainer(input_set, target_set, len(w2i), codedict, freqtable, mode=mode, NS=ns, dimension=64, epoch=1, learning_rate=0.01)
+    emb,_ = word2vec_trainer(input_set, target_set, len(w2i), codedict, freqtable, mode=mode, NS=ns, dimension=64, epoch=2, learning_rate=0.01)
     Analogical_Reasoning_Task(emb,w2i,i2w,vocab)
 
 
