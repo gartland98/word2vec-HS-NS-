@@ -384,24 +384,21 @@ def main():
     target_set=[]
     window_size = 5
 
-########################################################## subsampling code ##########################################################
-# I just change this part of code as comment because it takes a long time. But according to the paper subsampling improve accuracy of analogy task
-# Therefore if you want high accuracy I recommend you to use this part of code as well
-# subsampling function is in the upper part of this function
-    #subsample_class = []
-    #for j in range(len(freqdict)):
-        #subsample_classify = [1 for _ in range(int(subsampling(freqdict)[j] * 1000))] + [0 for _ in range(1000 - int(subsampling(freqdict)[j] * 1000))]
-        #subsample_class.append(subsample_classify)
-        #if len(subsample_class) % 50 == 0:
-            #print(len(subsample_class))
-########################################################################################################################################
+
+    subsample_class = []
+    for j in range(len(freqdict)):
+        subsample_classify = [1 for _ in range(int(subsampling(freqdict)[j] * 1000))] + [0 for _ in range(1000 - int(subsampling(freqdict)[j] * 1000))]
+        subsample_class.append(subsample_classify)
+        if len(subsample_class) % 50 == 0:
+            print(len(subsample_class))
+
     print('build training set2...')
     if mode=="CBOW":
         for j in range(len(words)):
-	    ################# subsampling ########################
-            #choice=random.choice(subsample_class[w2i[words[j]]])
-            #if choice==1:
-	    #######################################################
+	    
+            choice=random.choice(subsample_class[w2i[words[j]]])
+            if choice==1:
+	    
                 if j<window_size:
                     input_set.append([0 for _ in range(window_size-j)] + [w2i[words[k]] for k in range(j)] + [w2i[words[j+k+1]] for k in range(window_size)])
                     target_set.append(w2i[words[j]])
@@ -413,6 +410,7 @@ def main():
                     target_set.append(w2i[words[j]])
     if mode=="SG":
         for j in range(len(words)):
+		
             if j < window_size:
                 input_set += [w2i[words[j]] for _ in range(window_size * 2)]
                 target_set += [0 for _ in range(window_size - j)] + [w2i[words[k]] for k in range(j)] + [
