@@ -386,8 +386,9 @@ def main():
 
 
     subsample_class = []
+    subsample_freqdict=subsampling(freqdict)
     for j in range(len(freqdict)):
-        subsample_classify = [1 for _ in range(int(subsampling(freqdict)[j] * 1000))] + [0 for _ in range(1000 - int(subsampling(freqdict)[j] * 1000))]
+        subsample_classify = [0 for _ in range(int(subsample_freqdict[j] * 1000))] + [1 for _ in range(1000 - int(subsample_freqdict[j] * 1000))]
         subsample_class.append(subsample_classify)
         if len(subsample_class) % 50 == 0:
             print(len(subsample_class))
