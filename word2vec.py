@@ -239,6 +239,7 @@ def word2vec_trainer(input_seq, target_seq, numwords, codes, stats, mode="CBOW",
     W_out = torch.randn(numwords, dimension) / (dimension**0.5)
     i=0
     losses=[]
+    #last_loss=0
     print("# of training samples")
     print(len(input_seq))
     print()
@@ -261,8 +262,11 @@ def word2vec_trainer(input_seq, target_seq, numwords, codes, stats, mode="CBOW",
                         else:
                             current=current.right
                     L, G_in, G_out = CBOW_HS(inputs, codes[0][output], W_in, W_out[activated])
+		    #if last_loss>L and learning_rate>=0.0001: learning rate clipping, when loss goes up then learning rate will be drop
+                        #learning_rate=learning_rate*0.5
                     W_in[inputs] -= learning_rate*G_in
                     W_out[activated] -= learning_rate*G_out
+                    #last_loss=L
                 else:
                     #Only use the activated rows of the weight matrix
                     #activated should be torch.tensor(K,) so that activated W_out has the form of torch.tensor(K, D)
@@ -270,8 +274,11 @@ def word2vec_trainer(input_seq, target_seq, numwords, codes, stats, mode="CBOW",
                     activated= [i for i in stats if i !=output][:NS]
                     activated.append(output)
                     L, G_in, G_out = CBOW_NS(inputs, W_in, W_out[activated])
+		    #if last_loss>L and learning_rate>=0.0001: learning rate clipping, when loss goes up then learning rate will be drop
+                        #learning_rate=learning_rate*0.5
                     W_in[inputs] -= learning_rate*G_in
                     W_out[activated] -= learning_rate*G_out
+		    #last_loss=L
 
             elif mode=="SG":
                 if NS==0:
@@ -286,8 +293,11 @@ def word2vec_trainer(input_seq, target_seq, numwords, codes, stats, mode="CBOW",
                         else:
                             current=current.right
                     L, G_in, G_out = skipgram_HS(inputs, codes[0][output], W_in, W_out[activated])
+		    #if last_loss>L and learning_rate>=0.0001: learning rate clipping, when loss goes up then learning rate will be drop
+                        #learning_rate=learning_rate*0.5
                     W_in[inputs] -= learning_rate*G_in.squeeze()
                     W_out[activated] -= learning_rate*G_out
+		    #last_loss=L
                 else:
                     #Only use the activated rows of the weight matrix
                     #activated should be torch.tensor(K,) so that activated W_out has the form of torch.tensor(K, D)
@@ -295,9 +305,11 @@ def word2vec_trainer(input_seq, target_seq, numwords, codes, stats, mode="CBOW",
                     activated =[i for i in stats if i != output][:NS]
                     activated.append(output)
                     L, G_in, G_out = skipgram_NS(inputs, W_in, W_out[activated])
+		    #if last_loss>L and learning_rate>=0.0001: learning rate clipping, when loss goes up then learning rate will be drop
+                        #learning_rate=learning_rate*0.5
                     W_in[inputs] -= learning_rate*G_in.squeeze()
                     W_out[activated] -= learning_rate*G_out
-
+                    #last_loss=L
 
 
                 
