@@ -27,8 +27,8 @@ def Analogical_Reasoning_Task(embedding, word2ind, ind2word,vocab):
     word_prediction=[]
     for i in emb_vector:
         length = (i * i).sum() ** 0.5
-        inputVector = i.reshape(1, -1) / length
-        sim = torch.mm(inputVector, embedding.t())[0] / length
+        L2norm = i.reshape(1, -1) / length
+        sim = torch.mm(L2norm, embedding.t())[0] / length
         value, indice = sim.squeeze().topk(1)
         word_prediction.append(ind2word[int(indice)])
     word_analogy=[(j[0],j[1],j[2],t) for j,t in zip(analogy,word_prediction)]
