@@ -13,9 +13,9 @@ partition : "part" if you want to train on a part of corpus (faster training but
              "full" if you want to train on full corpus (better performance but slower training)
 
 Examples) 
-python word2vec.py SG 0 full // SG training with hierarchical softmax
+python word2vec.py SG 0 full // SG training with hierarchical softmax with full corpus
 
-python word2vec.py SG 20 full // SG training with 20 negative samples
+python word2vec.py SG 20 part // SG training with 20 negative samples with first 1 million words
 
 You should adjust the other hyperparameters in the code file manually.
 
